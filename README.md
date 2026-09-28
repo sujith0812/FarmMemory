@@ -1,4 +1,4 @@
-# **🌾 FarmMemory**
+🌾FarmMemory
 
 
 
@@ -334,7 +334,7 @@ Before the new observation, FarmMemory can recall information already stored for
 
 
 
-!\[Hindsight Recall](docs/01-hindsight-recall.png)
+!\[Hindsight Recall](docs/01-hindsight-recall.jpeg)
 
 
 
@@ -346,7 +346,7 @@ The farmer can provide a new observation using natural language. FarmMemory extr
 
 
 
-!\[New Memory Learned](docs/02-new-memory.png)
+!\[New Memory Learned](docs/02-new-memory.jpeg)
 
 
 
@@ -358,7 +358,7 @@ Later, the farmer can ask about the new observation. FarmMemory retrieves the re
 
 
 
-!\[Hindsight Today Recall](docs/03-hindsight-today-recall.png)
+!\[Hindsight Today Recall](docs/03-hindsight-today-recall.jpeg)
 
 
 
@@ -632,23 +632,23 @@ near the rice plants.
 
 **🛠️ Tech Stack**
 
-Layer	Technology
+Layer	               Technology
 
-Frontend	Next.js
+Frontend	         Next.js
 
-UI	React + TypeScript + Tailwind CSS
+UI	                 React + TypeScript + Tailwind CSS
 
-Backend	Python + FastAPI
+Backend	                 Python + FastAPI
 
-Memory	Hindsight
+Memory	                 Hindsight
 
-LLM	Groq
+LLM	                  Groq
 
-Model	openai/gpt-oss-20b
+Model                  	openai/gpt-oss-20b
 
-Voice Input	Web Speech API
+Voice Input	        Web Speech API
 
-Voice Language	Telugu (te-IN)
+Voice Language	        Telugu (te-IN)
 
 API Communication	HTTP / JSON
 
@@ -661,63 +661,36 @@ API Communication	HTTP / JSON
 **📁 Project Structure**
 
 FarmMemory/
-
 │
-
 ├── backend/
-
-│   │
-
 │   ├── app/
-
 │   │   ├── main.py
-
-│   │   │
-
-│   │   ├── ai\_client.py
-
-│   │   │
-
-│   │   ├── hindsight\_client.py
-
-│   │   │
-
-│   │   ├── memory\_extractor.py
-
-│   │   │
-
+│   │   ├── ai_client.py
+│   │   ├── hindsight_client.py
+│   │   ├── memory_extractor.py
 │   │   └── routes/
-
 │   │       ├── memory.py
-
 │   │       └── chat.py
-
 │   │
-
-│   ├── .env
-
-│   └── .venv/
-
+│   ├── .env.example
+│   ├── .gitignore
+│   └── test_hindsight.py
 │
-
-└── frontend/
-
-&#x20;   │
-
-&#x20;   ├── app/
-
-&#x20;   │   ├── page.tsx
-
-&#x20;   │   ├── layout.tsx
-
-&#x20;   │   └── globals.css
-
-&#x20;   │
-
-&#x20;   ├── package.json
-
-&#x20;   └── ...
-
+├── frontend/
+│   ├── app/
+│   │   ├── page.tsx
+│   │   ├── layout.tsx
+│   │   └── globals.css
+│   ├── package.json
+│   └── ...
+│
+├── docs/
+│   ├── architecture.png
+│   ├── 01-hindsight-recall.png.jpeg
+│   ├── 02-new-memory.png.jpeg
+│   └── 03-hindsight-today-recall.png.jpeg
+│
+└── README.md
 
 
 
@@ -1056,21 +1029,17 @@ npm run dev
 
 http://localhost:3000
 
-🔑 Environment Variables
+## 🔑 Environment Variables
 
+Create a `.env` file inside the `backend/` directory.
 
+Required variables:
 
-The backend requires environment variables for:
-
-
-
-HINDSIGHT\_API\_URL
-
-HINDSIGHT\_API\_KEY
-
-HINDSIGHT\_BANK\_ID
-
-GROQ\_API\_KEY
+```env
+HINDSIGHT_API_URL=https://api.hindsight.vectorize.io
+HINDSIGHT_API_KEY=your_hindsight_api_key_here
+HINDSIGHT_BANK_ID=farm-memory-demo
+GROQ_API_KEY=your_groq_api_key_here
 
 
 
@@ -1095,6 +1064,7 @@ Add .env to .gitignore.
 node\_modules/
 
 .next/
+
 
 🧪 Example Memory Journey
 
