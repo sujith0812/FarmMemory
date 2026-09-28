@@ -1,1206 +1,544 @@
-🌾FarmMemory
+# 🌾 FarmMemory
 
+### A Voice-First AI Farm Companion That Remembers Field History
 
+FarmMemory is a voice-first agricultural AI companion that gives farmers something most conversational AI systems lack: **persistent memory of their farm and field history**.
 
-An AI farm companion that remembers what happened in your fields, so every new conversation can start with farm history instead of zero.
+Instead of starting every conversation from zero, FarmMemory remembers important field observations, actions, crops, and outcomes and uses that history when the farmer asks future questions.
 
+> **FarmMemory remembers what happened in every field, so the next agricultural conversation starts with history instead of zero.**
 
+---
 
-FarmMemory is a voice-first agricultural AI companion designed around one simple idea:
+## ✨ What Is FarmMemory?
 
+FarmMemory is designed around a simple idea:
 
+**Agricultural conversations become more useful when the AI remembers the field.**
 
-Farm conversations should have memory.
+A field is not a blank slate every time a farmer asks a question.
 
+The field may have:
 
+- Previous crops
+- Irrigation events
+- Soil conditions
+- Farmer observations
+- Actions taken
+- Previous outcomes
+- Seasonal history
+- New observations
 
-A farmer can speak about a field, ask about previous events, record a new observation, and later ask about it again. FarmMemory uses Hindsight as its memory layer to retain and recall relevant farm history across conversations.
+A normal chatbot mainly sees the current conversation.
 
+FarmMemory adds a persistent memory layer using **Hindsight**, allowing the agent to retrieve relevant historical context and use it in future conversations.
 
+---
 
-The current prototype focuses on a simple workflow:
+# 🎯 The Problem
 
-
-
-Speak → Remember → Recall → Respond
-
-
-
-## **🎯 The Problem**
-
-
-
-A normal AI assistant can answer a farmer's question, but without persistent memory, every conversation can effectively start from zero.
-
-
+Agricultural decisions often depend on what happened previously in a particular field.
 
 For example:
 
+A farmer may remember that a field had low soil moisture several weeks ago, irrigation was applied, and the field condition later improved.
 
+When the farmer talks to a new AI conversation later, that context may not be available.
 
-A farmer says:
+The farmer may have to explain the same history again.
 
+Important information may also be scattered across:
 
+- Notebooks
+- WhatsApp messages
+- Personal memory
+- Separate records
+- Previous conversations
 
-"Today I noticed small water pools near the rice plants."
+### The core problem
 
+> **Agricultural context gets lost between conversations and seasons.**
 
+FarmMemory addresses this by giving the AI agent persistent, queryable memory of field-level experiences.
 
-Later, the farmer asks:
+---
 
+# 💡 The Solution
 
+FarmMemory creates a memory layer around the farmer's field.
 
-"What new thing did I notice today?"
+The basic interaction is:
 
+```text
+                                                                 Farmer
+                                                                   # 🌾 FarmMemory
 
+### A Voice-First AI Farm Companion That Remembers Field History
 
-Without farm memory, the assistant has no reliable record of what the farmer previously said.
+FarmMemory is a voice-first agricultural AI companion that gives farmers something most conversational AI systems lack: **persistent memory of their farm and field history**.
 
+Instead of starting every conversation from zero, FarmMemory remembers important field observations, actions, crops, and outcomes and uses that history when the farmer asks future questions.
 
+> **FarmMemory remembers what happened in every field, so the next agricultural conversation starts with history instead of zero.**
 
-FarmMemory addresses this by making farm history part of the conversation context.
+---
 
+## ✨ What Is FarmMemory?
 
+FarmMemory is designed around a simple idea:
 
-## **💡 The Solution**
+**Agricultural conversations become more useful when the AI remembers the field.**
 
+A field is not a blank slate every time a farmer asks a question.
 
+The field may have:
 
-FarmMemory combines:
+- Previous crops
+- Irrigation events
+- Soil conditions
+- Farmer observations
+- Actions taken
+- Previous outcomes
+- Seasonal history
+- New observations
 
+A normal chatbot mainly sees the current conversation.
 
+FarmMemory adds a persistent memory layer using **Hindsight**, allowing the agent to retrieve relevant historical context and use it in future conversations.
 
-🎤 Voice interaction
+---
 
-🌾 Field-specific farm history
+# 🎯 The Problem
 
-🧠 Hindsight memory
-
-🤖 LLM-based reasoning
-
-🗣️ Local-language responses
-
-
-
-The farmer can speak naturally, while FarmMemory handles the memory workflow in the background.
-
-
-
-Farmer
-
-&#x20; │
-
-&#x20; │ Voice
-
-&#x20; ▼
-
-FarmMemory Frontend
-
-&#x20; │
-
-&#x20; │ Telugu speech → text
-
-&#x20; ▼
-
-FastAPI Backend
-
-&#x20; │
-
-&#x20; ├──────────────► Hindsight
-
-&#x20; │                 │
-
-&#x20; │                 ├── Recall history
-
-&#x20; │                 └── Retain new memories
-
-&#x20; │
-
-&#x20; ▼
-
-Groq + LLM
-
-&#x20; │
-
-&#x20; ▼
-
-FarmMemory Response
-
-&#x20; │
-
-&#x20; ▼
-
-Telugu Voice Response
-
-
-
-
-
-**🧠 Why Hindsight?**
-
-
-
-FarmMemory needs more than a normal chat history.
-
-
-
-The important information is not simply:
-
-
-
-"What was the previous message?"
-
-
-
-The important question is:
-
-
-
-"What does FarmMemory know about this field that is relevant now?"
-
-
-
-Hindsight provides the memory layer used by FarmMemory to:
-
-
-
-retain durable farm information
-
-recall relevant historical information
-
-connect later conversations with previous farm events
-
-provide memory context to the AI agent
-
-
-
-Our backend uses Hindsight for both sides of the memory loop:
-
-
-
-New farm information
-
-&#x20;      ↓
-
-&#x20;    Retain
-
-&#x20;      ↓
-
-&#x20;   Hindsight
-
-&#x20;      ↓
-
-&#x20;    Recall
-
-&#x20;      ↓
-
-Relevant farm history
-
-&#x20;      ↓
-
-&#x20;      LLM
-
-&#x20;      ↓
-
-History-aware answer
-
-
-
-**🔄 How FarmMemory Learns**
-
-
-
-FarmMemory has two important memory operations.
-
-
-
-**1. Remember**
-
-
-
-When a farmer provides new durable information, the backend extracts the useful farm information and stores it in Hindsight.
-
-
+Agricultural decisions often depend on what happened previously in a particular field.
 
 For example:
 
+A farmer may remember that a field had low soil moisture several weeks ago, irrigation was applied, and the field condition later improved.
+
+When the farmer talks to a new AI conversation later, that context may not be available.
+
+The farmer may have to explain the same history again.
+
+Important information may also be scattered across:
+
+- Notebooks
+- WhatsApp messages
+- Personal memory
+- Separate records
+- Previous conversations
+
+### The core problem
+
+> **Agricultural context gets lost between conversations and seasons.**
+
+FarmMemory addresses this by giving the AI agent persistent, queryable memory of field-level experiences.
+
+---
+
+# 💡 The Solution
+
+FarmMemory creates a memory layer around the farmer's field.
+
+The basic interaction is:
+
+```text
+                                                   Farmer
+                                                     ↓
+                                               Voice / Chat
+                                                     ↓
+                                            FarmMemory AI Agent
+                                                     ↓
+                                              Hindsight Memory
+                                                     ↓
+                                            Relevant Farm History
+                                                     ↓
+                                                 AI Reasoning
+                                                     ↓
+                                         Simple Local-Language Response
+                                                     ↓
+                                                   Farmer
 
 
-Farmer:
+
+
+       ┌──────────────────────┐
+       │      FARMER                │
+       └──────────┬───────────┘
+                     ↓
+           New observation
+                     ↓
+       ┌──────────────────────┐
+       │   FARMMEMORY AGENT         │
+       └──────────┬───────────┘
+                      ↓
+       ┌──────────────────────┐
+       │  HINDSIGHT MEMORY           │
+       │                             │
+       │  Retain → Recall            │
+       │       → Reflect             │
+       └──────────┬───────────┘
+                  ↓
+          Context-aware answer
+                  ↓
+           Future interaction
+                  │
+                  └──────────────→ Memory
 
 
 
-ఈరోజు F-02 లో వరి మొక్కల దగ్గర
+                                                    🧠 Why Hindsight Is Central
 
-చిన్న చిన్న నీటి గుంటలు కనిపించాయి.
+Hindsight is not being used as an extra feature around a chatbot.
 
-
-
-FarmMemory extracts the observation:
+It is the memory layer that makes FarmMemory different from a normal conversational AI system.
 
 
 
-**Field F-02:**
+FarmMemory uses Hindsight to:
 
+1. Retain
+
+Important farm experiences and observations can be stored as long-term memory.
+
+Example:
+
+Field F-02:
 The farmer observed small water pools near the rice plants.
 
 
+2. Recall
 
-The memory is then retained in Hindsight.
+When the farmer asks a future question, FarmMemory retrieves relevant memories for that field.
 
-
-
-2\. Recall
-
-
-
-Later, the farmer can ask:
-
-
-
-F-02 లో నేను ఈరోజు ఏ కొత్త విషయం గమనించాను?
-
-
-
-FarmMemory recalls the relevant memory and uses it as context for the LLM.
-
-
-
-The response can then focus on the actual recorded observation.
-
-
-
-This creates the key behavior:
-
-
-
-Conversation 1
-
-&#x20;     ↓
-
-Farmer teaches the agent
-
-&#x20;     ↓
-
-Hindsight retains memory
-
-&#x20;     ↓
-
-Conversation 2
-
-&#x20;     ↓
-
-Farmer asks about the past
-
-&#x20;     ↓
-
-Hindsight recalls memory
-
-&#x20;     ↓
-
-AI responds using history
-
-
-
-**## System Architecture**
-
-
-
-!\[FarmMemory System Architecture](docs/architecture.png)
-
-
-
-FarmMemory follows a voice-first architecture where the farmer's message is processed by the FastAPI agent, relevant farm history is recalled from Hindsight, and the LLM generates a contextual response.
-
-
-
-**## Hindsight Memory in Action**
-
-
-
-FarmMemory is designed around a simple learning loop:
-
-
-
-\*\*Recall → Learn → Recall Again\*\*
-
-
-
-**### 1. Recalling Existing Farm History**
-
-
-
-Before the new observation, FarmMemory can recall information already stored for the selected field.
-
-
-
-!\[Hindsight Recall](docs/01-hindsight-recall.jpeg)
-
-
-
-**### 2. Learning a New Farm Observation**
-
-
-
-The farmer can provide a new observation using natural language. FarmMemory extracts the durable information and stores it for future conversations.
-
-
-
-!\[New Memory Learned](docs/02-new-memory.jpeg)
-
-
-
-**### 3. Recalling the Newly Learned Information**
-
-
-
-Later, the farmer can ask about the new observation. FarmMemory retrieves the relevant memory instead of starting the conversation from zero.
-
-
-
-!\[Hindsight Today Recall](docs/03-hindsight-today-recall.jpeg)
-
-
-
-This demonstrates the core FarmMemory loop:
-
-
-
-```text
-
-Farmer observation
-
-&#x20;      ↓
-
-Memory extraction
-
-&#x20;      ↓
-
-Hindsight retain
-
-&#x20;      ↓
-
-Future conversation
-
-&#x20;      ↓
-
-Hindsight recall
-
-&#x20;      ↓
-
-Context-aware response
-
-
-
-
-
-**🎬 Working Demo**
-
-
-
-The current prototype demonstrates three interactions.
-
-
-
-1\. Recall existing farm history
-
-
-
-The farmer asks:
-
-
+Example:
 
 F-02 లో గతంలో ఏం జరిగింది?
 
+The agent can retrieve relevant historical events instead of treating the question as a completely new conversation.
 
 
-FarmMemory retrieves relevant historical information associated with field F-02.
 
+3. Use Memory in the Conversation
 
+The retrieved context is provided to the AI agent so the response can be grounded in the farm's history.
 
-The interface displays the recalled Hindsight memories.
+The result is a conversation that can become increasingly field-specific and context-aware.
 
 
 
-2\. Teach FarmMemory something new
 
 
+                                                   🔄 Before vs After
+              
+                 Without FarmMemory
+                                               Farmer
+                                                 ↓
+                                         New conversation
+                                                  ↓
+                                     AI sees the current context
+                                                 ↓
+                                    Farmer explains field history again
+                                                 ↓
+                                    Generic/context-limited response
 
-The farmer says:
 
+                 With FarmMemory
+                                               
+                                                Farmer
+                                                  ↓
+                                            New conversation
+                                                  ↓
+                                     Hindsight recalls relevant field history
+                                                   ↓
+                                  FarmMemory combines history + current observation
+                                                  ↓
+                                        Context-aware response
 
 
-ఈరోజు F-02 లో వరి మొక్కల దగ్గర
+The difference:-
 
-చిన్న చిన్న నీటి గుంటలు కనిపించాయి.
+Without memory, the conversation starts from the current message.
 
+With FarmMemory, the conversation can start with relevant farm history.
 
 
-**The system:**
+🎙️ Voice-First Experience
 
+FarmMemory is designed around simple farmer interaction rather than complex dashboards.
 
+The interface supports:
 
-Farmer observation
+Voice input
+Telugu interaction
+Telugu speech output
+Simple field selection
+Conversational interaction
+Visible memory evidence
 
-&#x20;       ↓
+The current demo uses the browser's Web Speech API for Telugu voice interaction.
 
-Memory extraction
 
-&#x20;       ↓
 
-Hindsight retain
 
-&#x20;       ↓
+🛠️ Technology Stack
 
-Memory saved
+Frontend
 
+1. Next.js
+2. React
+3. TypeScript
+4. Tailwind CSS
+5. Lucide React
+6. Web Speech API
 
 
-The interface then displays:
 
+Backend
 
 
-FarmMemory learned something new
+1. Python
+2. FastAPI
+3. Pydantic
+4. Python-dotenv
 
 
+AI
 
-along with the newly stored farm memory.
+1. Groq
+2. OpenAI GPT OSS 20B
 
 
+Memory
 
-3\. Recall the new observation later
+1. Hindsight Cloud
 
 
+Development
 
-The farmer asks:
+1. Git
+2. GitHub
+3. VS Code
+4. Swagger / OpenAPI
 
 
 
-F-02 లో నేను ఈరోజు ఏ కొత్త విషయం గమనించాను?
 
+PROJECT STRUTURE:
 
-
-FarmMemory retrieves the relevant recent observation and responds with the water-pool observation.
-
-
-
-This demonstrates the core memory behavior:
-
-
-
-The agent remembers something the farmer told it earlier and uses that memory in a later conversation.
-
-
-
-**🧠 Hindsight Memory Evidence**
-
-
-
-The application exposes the memory process directly in the interface.
-
-
-
-**The current UI shows:**
-
-
-
-**🌾 Farm History**
-
-
-
-Remembers past events.
-
-
-
-**🧠 Hindsight**
-
-
-
-Recalls relevant history.
-
-
-
-**💾 Learns**
-
-
-
-Saves new observations.
-
-
-
-When memories are recalled, the interface also displays a FarmMemory remembered section containing the relevant historical memories.
-
-
-
-When a new memory is successfully stored, the interface shows:
-
-
-
-FarmMemory learned something new
-
-
-
-Saved for future conversations
-
-
-
-**New farm memory:**
-
-Field F-02: The farmer observed small water pools
-
-near the rice plants.
-
-**🏗️ Architecture**
-
-&#x20;                   ┌──────────────────────┐
-
-&#x20;                   │       Farmer                │
-
-&#x20;                   │   🎤 Telugu Voice          │
-
-&#x20;                   └──────────┬───────────┘
-
-&#x20;                              │
-
-&#x20;                              ▼
-
-&#x20;                   ┌──────────────────────┐
-
-&#x20;                   │   Next.js Frontend          │
-
-&#x20;                   │      React + TS             │
-
-&#x20;                   └──────────┬───────────┘
-
-&#x20;                              │
-
-&#x20;                        HTTP / JSON
-
-&#x20;                              │
-
-&#x20;                              ▼
-
-&#x20;                   ┌──────────────────────┐
-
-&#x20;                   │    FastAPI Backend          │
-
-&#x20;                   │    FarmMemory Agent         │
-
-&#x20;                   └──────┬─────────┬─────┘
-
-&#x20;                          │         │
-
-&#x20;                   Recall │         │ Retain
-
-&#x20;                          ▼         ▼
-
-&#x20;                   ┌──────────────────────┐
-
-&#x20;                   │      Hindsight              │
-
-&#x20;                   │    Farm Memory              │
-
-&#x20;                   └──────────┬───────────┘
-
-&#x20;                              │
-
-&#x20;                        Relevant Memory
-
-&#x20;                              │
-
-&#x20;                              ▼
-
-&#x20;                   ┌──────────────────────┐
-
-&#x20;                   │     Groq + LLM             │
-
-&#x20;                   │  openai/gpt-oss-20b        │
-
-&#x20;                   └──────────┬───────────┘
-
-&#x20;                              │
-
-&#x20;                              ▼
-
-&#x20;                   ┌──────────────────────┐
-
-&#x20;                   │  Telugu Response           │
-
-&#x20;                   │      🔊 Voice              │
-
-&#x20;                   └──────────────────────┘
-
-**🛠️ Tech Stack**
-
-Layer	               Technology
-
-Frontend	         Next.js
-
-UI	                 React + TypeScript + Tailwind CSS
-
-Backend	                 Python + FastAPI
-
-Memory	                 Hindsight
-
-LLM	                  Groq
-
-Model                  	openai/gpt-oss-20b
-
-Voice Input	        Web Speech API
-
-Voice Language	        Telugu (te-IN)
-
-API Communication	HTTP / JSON
-
-
-
-
-
-
-
-**📁 Project Structure**
 
 FarmMemory/
 │
 ├── backend/
+│   │
 │   ├── app/
 │   │   ├── main.py
 │   │   ├── ai_client.py
 │   │   ├── hindsight_client.py
 │   │   ├── memory_extractor.py
+│   │   │
 │   │   └── routes/
-│   │       ├── memory.py
-│   │       └── chat.py
+│   │       ├── chat.py
+│   │       └── memory.py
 │   │
 │   ├── .env.example
-│   ├── .gitignore
+│   ├── requirements.txt
 │   └── test_hindsight.py
 │
 ├── frontend/
+│   │
 │   ├── app/
 │   │   ├── page.tsx
 │   │   ├── layout.tsx
 │   │   └── globals.css
+│   │
 │   ├── package.json
-│   └── ...
+│   └── package-lock.json
 │
 ├── docs/
-│   ├── architecture.png
-│   ├── 01-hindsight-recall.png.jpeg
-│   ├── 02-new-memory.png.jpeg
-│   └── 03-hindsight-today-recall.png.jpeg
+│   ├── 01-hindsight-recall.jpeg
+│   ├── 02-new-memory.jpeg
+│   ├── 03-hindsight-today-recall.jpeg
+│   └── architecture.png
 │
-└── README.md
+├── README.md
+└── .gitignore
 
 
 
+🧠 Memory Extraction
 
 
 
-**🔌 Backend API**
+FarmMemory does not blindly save every message.
 
-Health Check
-
-GET /health
-
-
-
-Response:
-
-
-
-{
-
-&#x20; "status": "healthy"
-
-}
-
-Chat
-
-POST /api/chat
-
-
-
-Example request:
-
-
-
-{
-
-&#x20; "field\_id": "F-02",
-
-&#x20; "language": "te",
-
-&#x20; "message": "ఈరోజు F-02 లో ఏం గమనించాను?"
-
-}
-
-
-
-**The chat endpoint:**
-
-
-
-receives the farmer's message
-
-creates a field-aware memory query
-
-recalls memories from Hindsight
-
-filters them for the requested field
-
-provides relevant memory to the LLM
-
-generates the response
-
-extracts durable information from the farmer's message
-
-retains new information when appropriate
-
-Remember
-
-POST /api/memory/remember
-
-
-
-Used to explicitly store farm information in Hindsight.
-
-
-
-Recall
-
-POST /api/memory/recall
-
-
-
-Used to retrieve relevant farm memories.
-
-
-
-**🧩 Memory Extraction**
-
-
-
-A separate memory extraction component determines whether a farmer's message contains durable farm information.
-
-
-
-The extractor is instructed to use only the farmer's message.
-
-
-
-It must not extract information from the AI response.
-
+A separate memory extraction step determines whether the farmer's message contains durable information worth remembering.
 
 
 For example:
 
+1. Stored
 
+->The farmer observed small water pools near the rice plants.
 
-Farmer:
 
-Today I noticed small water pools near the rice plants.
+2. Not stored
+Hello
+Thank you
+What happened previously?
+What is new today?
 
+The extractor is intentionally designed to avoid turning normal questions or casual conversation into farm memories.
 
 
-Can become:
+                                                🚀 Local Setup
+1. Clone the repository
 
+git clone https://github.com/sujith0812/FarmMemory.git
+cd FarmMemory
 
+ 
+                                               ⚙️ Backend Setup
 
-Field F-02:
+Open a terminal:
 
-The farmer observed small water pools near the rice plants.
+cd backend
 
+Create a Python virtual environment:
 
+py -m venv .venv
 
-But a question such as:
+Activate it:
 
+.\.venv\Scripts\Activate.ps1
 
+Install dependencies:
 
-What happened previously in F-02?
+pip install --upgrade pip
+pip install hindsight-client python-dotenv
+pip install fastapi uvicorn
+pip install groq
 
+Create:
 
+backend/.env
 
-should not become a new memory.
+Add the required environment variables.
 
-
-
-This distinction prevents normal questions from polluting the farm memory.
-
-
-
-
-
-
-
-**🔐 Safety \& Limitations**
-
-
-
-FarmMemory is designed as an information and memory assistant, not as a replacement for agricultural professionals.
-
-
-
-The current AI instructions explicitly prevent the system from:
-
-
-
-inventing farm events
-
-inventing dates
-
-inventing crop actions
-
-treating historical events as guaranteed causes
-
-diagnosing crop diseases with certainty
-
-guaranteeing agricultural outcomes
-
-prescribing pesticide or chemical quantities
-
-inventing fertilizer doses
-
-presenting unsupported agricultural measurements as facts
-
-
-
-When a crop problem is uncertain or potentially serious, the system is instructed to recommend checking with a local agricultural expert.
-
-
-
-Farm memories are treated as historical records, not proof that the same event or cause will occur again.
-
-
-
-
-
-
-
-
-
-**🌱 Real-World Use Case**
-
-
-
-FarmMemory is designed around a simple interaction model:
-
-
-
-"I told you this before."
-
-&#x20;         ↓
-
-"Remember my field."
-
-&#x20;         ↓
-
-"What happened there previously?"
-
-&#x20;         ↓
-
-"What's new today?"
-
-
-
-Instead of forcing the farmer to repeatedly explain the same field history, the agent can use the information already recorded in its memory.
-
-
-
-The current prototype focuses on a single field-oriented workflow rather than attempting to solve every agricultural problem.
-
-
-
-
-
-
-
-**🔮 Future Scope**
-
-
-
-The current implementation is intentionally focused.
-
-
-
-Potential future development includes:
-
-
-
-persistent farmer profiles
-
-multiple farms and fields
-
-richer crop histories
-
-planting and harvest records
-
-weather and field-condition integrations
-
-additional Indian languages
-
-improved speech recognition
-
-agricultural expert verification workflows
-
-mobile application support
-
-structured farm analytics
-
-longer-term field trends
-
-
-
-These are future directions, not claims about the current implementation.
-
-
-
-
-
-
-
-**🚀 Running Locally**
-
-Backend
-
-
-
-Open PowerShell:
-
-
-
-cd D:\\FarmMemory\\backend
-
-
-
-Activate the virtual environment:
-
-
-
-.\\.venv\\Scripts\\Activate.ps1
-
-
-
-**Start FastAPI:**
-
-
+Start the backend:
 
 python -m uvicorn app.main:app --reload
 
-
-
-**Backend:**
-
-
+The API will be available at:
 
 http://127.0.0.1:8000
 
-
-
-Swagger API documentation:
-
-
+Swagger documentation:
 
 http://127.0.0.1:8000/docs
 
-Frontend
+Health check:
 
+http://127.0.0.1:8000/health
+
+Expected response:
+
+{
+  "status": "healthy"
+}
+                                           
+                                                 💻 Frontend Setup
 
 
 Open another terminal:
 
+cd frontend
 
+Install dependencies:
 
-cd D:\\FarmMemory\\frontend
+npm install
 
-
-
-Start Next.js:
-
-
+Start the development server:
 
 npm run dev
 
-
-
-**Frontend:**
-
-
+Open:
 
 http://localhost:3000
 
-## 🔑 Environment Variables
 
-Create a `.env` file inside the `backend/` directory.
 
-Required variables:
+                                              🧪 Testing the Demo
 
-```env
-HINDSIGHT_API_URL=https://api.hindsight.vectorize.io
-HINDSIGHT_API_KEY=your_hindsight_api_key_here
-HINDSIGHT_BANK_ID=farm-memory-demo
-GROQ_API_KEY=your_groq_api_key_here
 
+Test 1 — Historical Recall
 
+F-02 లో గతంలో ఏం జరిగింది?
 
-Never commit .env or API keys to GitHub.
+Expected behavior:
 
+FarmMemory retrieves relevant historical field memories.
 
 
-Add .env to .gitignore.
 
+Test 2 — New Memory
+ఈరోజు F-02 లో వరి మొక్కల దగ్గర చిన్న చిన్న నీటి గుంటలు కనిపించాయి.
 
+Expected behavior:
 
-**Example:**
+FarmMemory learns something new.
+The observation is stored for future conversations.
 
 
 
-.env
+Test 3 — Future Recall
+F-02 లో నేను ఈరోజు ఏ కొత్త విషయం గమనించాను?
 
-.venv/
+Expected behavior:
 
-\_\_pycache\_\_/
+FarmMemory recalls the newly stored observation.
 
-node\_modules/
 
-.next/
 
+   The important sequence is:
 
-🧪 Example Memory Journey
+RECALL 
+  |
+  -→ RETAIN 
+        |
+        -→ RECALL
 
-First interaction
 
-Farmer:
+📈 Future Scope
 
-Today I noticed small water pools near the rice plants.
+The current MVP focuses on proving the memory workflow.
 
-FarmMemory
+Future versions can expand the same foundation into:
 
-Extract observation
-
-&#x20;       ↓
-
-Retain in Hindsight
-
-Later interaction
-
-Farmer:
-
-What new thing did I notice today?
-
-FarmMemory
-
-Recall from Hindsight
-
-&#x20;       ↓
-
-Identify relevant recent memory
-
-&#x20;       ↓
-
-Generate response
-
-Result
-
-
-
-The farmer gets an answer based on the previously recorded observation.
-
-
-
-**💭 The Core Idea**
-
-
-
-Most AI conversations are designed around the current message.
-
-
-
-FarmMemory is designed around:
-
-
-
-Current conversation
-
-&#x20;       +
-
-Relevant farm history
-
-&#x20;       +
-
-New observations
-
-&#x20;       ↓
-
-Better context for the next conversation
-
-
-
-The goal isn't simply to make an AI that can answer agricultural questions.
-
-
-
-The goal is to make an AI that remembers the farmer's field over time.
-
-
-
-📌 Project Status
-
-
-
-Current status: Working MVP
-
-
-
-**Implemented and tested:**
-
-
-
-✅ Voice input
-
-✅ Telugu speech recognition
-
-✅ Field selection
-
-✅ FastAPI backend
-
-✅ Hindsight integration
-
-✅ Farm memory retention
-
-✅ Farm memory recall
-
-✅ Field-specific memory filtering
-
-✅ LLM response generation
-
-✅ Telugu responses
-
-✅ Text-to-speech response
-
-✅ New-memory extraction
-
-✅ Memory-learning UI
-
-✅ Hindsight memory evidence UI
-
-✅ Three-step hindsight demonstration
-
-🔗 Resources
-
-Hindsight: https://github.com/vectorize-io/hindsight
-
-Hindsight Documentation: https://hindsight.vectorize.io/
-
-Vectorize Agent Memory: https://vectorize.io/what-is-agent-memory
-
-👥 Team
-
-
-
-**FarmMemory**
-
-
-
-Built for the Hindsight-powered agent experience.
-
+Farm History
+Multi-season field timelines
+More detailed crop history
+Field-level event tracking
+Historical outcomes
+Voice
+More Indian regional languages
+Improved speech recognition
+Better speech synthesis
+Voice-first navigation
+Memory
+More sophisticated memory organization
+Long-term farm preferences
+Cross-season context
+Better temporal reasoning
+Farm Intelligence
+More structured field data
+Weather context
+Soil information
+Sensor integrations
+Agricultural knowledge sources
+Platform
+Multiple farms
+Multiple fields
+User authentication
+Farm-level memory isolation
+Mobile-first experience
